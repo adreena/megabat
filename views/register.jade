@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1= title
+  if errors
+   each error, i in errors
+    div.alert.alert-danger #{error.msg}
+  form(method='POST', action='/users/register')
+   .form-group
+    label Name
+    input.form-control(name='name', type='text', placeholder='Enter Name')
+   .form-group
+    label Username
+    input.form-control(name='username', type='text', placeholder='Enter Username')
+   .form-group
+    label Username
+    input.form-control(name='email', type='email', placeholder='Enter Email')
+   .form-group
+    label Password
+    input.form-control(name='password', type='password', placeholder='Enter Password')
+   .form-group
+    label Confirm Password
+    input.form-control(name='password2', type='password', placeholder='Re-type Password')
+   .form-group
+    label Profile Picutre
+    input.form-control(name='profilepicture', type='file')
+   input.btn.btn-primary(type='submit', name='register',value='Register')
