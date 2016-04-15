@@ -19,3 +19,11 @@ ul.error li{
     border-color: #ebccd1;
     list-style: none;
 }
+
+.border {
+    outline: 1px solid lightgray;
+    margin: 10px ;
+}
+.col-centered{
+    text-align: center;
+}

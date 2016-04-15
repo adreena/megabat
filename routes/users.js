@@ -50,14 +50,15 @@ passport.use(new LocalStrategy( function(username, password, done) {
 router.get('/register', function(req, res,next) {
    res.render('register',{title: 'Register'});
 });
-router.post('/register', function(req, res) {
+
+router.post('/register',multer({ dest: './uploads/'}).single('profilepicture'),  function(req, res,next) {
 	console.log('registering');
 	var name= req.body.name;
 	var username= req.body.username;
-	var email= req.body.username;
+	var email= req.body.email;
 	var password= req.body.password;
 	var password2= req.body.password2;
-
+    console.log("******"+req.file);
 	if(req.file){
 		console.log('Uploading File...');
 		var profilepicture = req.file.filename;

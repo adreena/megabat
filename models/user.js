@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var bcrypt = require('bcryptjs');
 var db= mongoose.connection;
-mongoose.connect('mongodb://localhost/megabat');
 
-var userSchema= mongoose.Schema({
+mongoose.connect('mongodb://demo:pass@ds023510.mlab.com:23510/megabat');
+
+var userSchema= new Schema({
 	name : {
 		type: String,
 		index: true,
@@ -11,11 +13,18 @@ var userSchema= mongoose.Schema({
 	username : {
 		type: String
 	},
+	email : {
+		type: String
+	},
 	password : {
 		type: String
 	},
 	profilepicture : {
 		type:String
+	},
+	joinedOn:{
+		type:Date,
+		default: Date.now
 	}
 });
 
@@ -42,4 +51,10 @@ module.exports.getUserById = function(id, callback){
 module.exports.getUserByUsername = function(username, callback){
 	var query = {username: username};
 	User.findOne(query, callback);
+};
+
+module.exports.getUsers = function(callback){
+	User.find(function (err, users) {
+	  callback(err,users);
+	})
 };
