@@ -4,11 +4,10 @@ var multer = require('multer');
 var upload = multer({dest: './uploads'});
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/user.js');
+var User = require('../controllers/user.controller.js');
 
 /*Login*/
 router.get('/login', function(req, res, next) {
-	console.log('??');
   res.render('login', {title:'Login'});
 });
 router.post('/login', passport.authenticate('local', { failureRedirect: '/',failureFlash: '/login' }),
@@ -44,6 +43,11 @@ passport.use(new LocalStrategy( function(username, password, done) {
 }));
 
 /*End Login*/
+
+/*Show User*/
+router.get('/show/:id', function(req, res,next) {
+  console.log("****"+req.params.id);
+});
 
 
 /*Register*/
