@@ -5,7 +5,7 @@ block content
   if errors
    each error, i in errors
     div.alert.alert-danger #{error.msg}
-  form(method='POST', action='/users/register')
+  form(method='POST' , enctype='multipart/form-data', action='/users/register')
    .form-group
     label Name
     input.form-control(name='name', type='text', placeholder='Enter Name')
@@ -13,7 +13,7 @@ block content
     label Username
     input.form-control(name='username', type='text', placeholder='Enter Username')
    .form-group
-    label Username
+    label Email
     input.form-control(name='email', type='email', placeholder='Enter Email')
    .form-group
     label Password

@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-var upload = multer({dest: './uploads'});
+var upload = multer({dest: './public/uploads'});
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('../controllers/user.controller.js');
+var UserController = require('../controllers/user.controller.js');
+var UserModel = require('../models/user.model.js');
 
 /*Login*/
 router.get('/login', function(req, res, next) {
@@ -20,18 +21,18 @@ passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 passport.deserializeUser(function(id, done) {
-  User.getUserById(id, function(err, user) {
+  UserController.getUserById(id, function(err, user) {
     done(err, user);
   });
 });
 //configuration
 passport.use(new LocalStrategy( function(username, password, done) {
-    User.getUserByUsername(username , function(err, user) {
+    UserController.getUserByUsername(username , function(err, user) {
       if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-    User.validPassword(password, user.password, function(err, isMatch){
+    UserController.validPassword(password, user.password, function(err, isMatch){
       if(err) return done(err);
       if(isMatch){
         return done(null, user);
@@ -54,14 +55,14 @@ router.get('/show/:id', function(req, res,next) {
 router.get('/register', function(req, res,next) {
    res.render('register',{title: 'Register'});
 });
-router.post('/register', function(req, res) {
+router.post('/register' , upload.single('profilepicture') , function(req, res) {
 	console.log('registering');
 	var name= req.body.name;
 	var username= req.body.username;
-	var email= req.body.username;
+	var email= req.body.email;
 	var password= req.body.password;
 	var password2= req.body.password2;
-
+    console.log("****"+name+' '+username+' '+ email +' '+password);
 	if(req.file){
 		console.log('Uploading File...');
 		var profilepicture = req.file.filename;
@@ -83,14 +84,15 @@ router.post('/register', function(req, res) {
 		res.render('register', {errors: errors});
 	}
 	else{
-		var newUser = new User({
+		var newUser = new UserModel({
 			name:name,
 			username:username,
 			email: email,
 			password : password,
-			profilepicture : profilepicture
+			profilepicture : profilepicture,
+			group:'A'
 		});
-		User.createUser(newUser, function(err,user){
+		UserController.createUser(newUser, function(err,user){
 			if(err) throw err;
 			console.log(user);
 		});

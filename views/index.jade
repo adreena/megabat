@@ -2,4 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  .row.container.center-block
+    each user in users    
+      .col-md-3.text-center
+        img.img-rounded(src= "uploads/#{user.profilepicture}", height='100', width='100')
+        a(href="views/show/#{user._id}") 
+          p.text-center #{user.name}
