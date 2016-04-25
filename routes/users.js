@@ -9,6 +9,7 @@ var UserModel = require('../models/user.model.js');
 
 /*Login*/
 router.get('/login', function(req, res, next) {
+	console.log("loggedin");
   res.render('login', {title:'Login'});
 });
 router.post('/login', passport.authenticate('local', { failureRedirect: '/',failureFlash: '/login' }),
@@ -46,8 +47,17 @@ passport.use(new LocalStrategy( function(username, password, done) {
 /*End Login*/
 
 /*Show User*/
-router.get('/show/:id', function(req, res,next) {
+router.get('/show/:id', function(req, res) {
   console.log("****"+req.params.id);
+  UserController.getUserById(req.params.id, function(err, user) {
+  	console.log("*^^*"+user.name);
+  	console.log("*^^*"+user.profilepicture);
+  	var notes = [{subject: 'subject 1'}, {subject: 'subject 2'}];
+  	user.notes.push(notes);
+  	user.notes.save();
+    res.render('show',{user:user, notes:user.notes});
+  });
+
 });
 
 
@@ -90,7 +100,8 @@ router.post('/register' , upload.single('profilepicture') , function(req, res) {
 			email: email,
 			password : password,
 			profilepicture : profilepicture,
-			group:'A'
+			group:'A',
+			children: [{ name: 'Matt' }, { name: 'Sarah' }]
 		});
 		UserController.createUser(newUser, function(err,user){
 			if(err) throw err;

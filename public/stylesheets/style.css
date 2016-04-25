@@ -19,8 +19,12 @@ ul.error li{
     border-color: #ebccd1;
     list-style: none;
 }
+.clr{
+    clear: both;
+}
 
 .centering {
   float:none;
   margin:5 auto;
 }
+
