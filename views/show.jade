@@ -17,12 +17,25 @@ block content
           a.btn.btn-info.note-btn(href='/notes/add', role='button') Add Note
         if notes
           #midCol(data-spy='affix', data-offset-top='300')
+            h3 Top 5 Notes:
             ul.list-group
-              each note in notes
+              - var i =0
+              while i<5 && i< notes.length
                 li.list-group-item  
-                  a(href='') #{note.subject}
+                  a(href='') #{notes[i].subject}
+                - i++
+                  
       .col-sm-7
         .row
           .col.col-sm-12
-            h2 Notes:
-          hr
+            ul.list-group
+              each note in notes
+                .panel.panel-default
+                  .panel-heading.clearfix
+                    b #{note.subject}
+                    .btn-group.pull-right
+                      a.btn.btn-default.btn-sm(href='#') 
+                        span.glyphicon.glyphicon-edit
+                      a.btn.btn-default.btn-sm(href='#') Edit
+                  .panel-body #{note.content}
+               

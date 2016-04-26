@@ -18,8 +18,10 @@ var NoteSchema = new Schema({
 	publishedOn:{
 		type: Date,
 		default: Date.now
+	},
+	noteimage : {
+		type:String
 	}
-
 });
 
 NoteSchema.plugin(relationship, { relationshipPathName:'author' });

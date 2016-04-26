@@ -8,6 +8,7 @@ module.exports.createNote = function(newNote, callback){
 }; 
 
 module.exports.getUserNotes = function(userID, callback){
-	console.log('get all user Notes ... for '+ userID + typeof userID);
-	Note.find({author: userID}, callback);
+	var query = Note.find({author: userID});
+	query.sort('rank');
+	query.exec(callback);
 }; 
