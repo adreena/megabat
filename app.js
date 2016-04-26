@@ -13,6 +13,7 @@ var flash = require('connect-flash');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var notes = require('./routes/notes');
 
 var app = express();
 app.locals.moment = require('moment');
@@ -31,7 +32,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret:'secret',
   saveUninitialized: true,
-  resave: true
+  resave: true,
+  cookie: {
+    path    : '/',
+    httpOnly: false,
+    maxAge  : 24*60*60*1000
+  }
 }));
 
 // Passport
@@ -73,6 +79,7 @@ app.get('*', function(req,res,next){
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/notes', notes);
 
 
 // catch 404 and forward to error handler

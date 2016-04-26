@@ -11,7 +11,6 @@ var Note = require('../_schemas/note.schema.js');
 var moment = require('moment');
 /*Login*/
 router.get('/login', function(req, res, next) {
-	console.log("loggedin");
   res.render('login', {title:'Login'});
 });
 router.post('/login', passport.authenticate('local', { failureRedirect: '/',failureFlash: '/login' }),
@@ -51,11 +50,12 @@ passport.use(new LocalStrategy( function(username, password, done) {
 /*Show User*/
 router.get('/show/:id', function(req, res) {
   console.log("****"+req.params.id);
-  UserController.getUserById(req.params.id, function(err, user) {
+  UserController.getUserById(req.params.id, function(err, member) {
 
-  	NoteController.getUserNotes(user._id, function(err,notes){
+  	NoteController.getUserNotes(member._id, function(err,notes){
   		console.log("GOT NOTES");
-		res.render('show',{user:user, notes:notes});
+  		var canAddNote = (req.user.id == member.id);
+		res.render('show',{member:member, notes:notes, canAddNote:canAddNote});
   	})
     
   });

@@ -7,13 +7,14 @@ block content
       .col-sm-3
         #midCol(data-spy='affix', data-offset-top='300')
           .well
-            img.img-rounded(src= "../../uploads/#{user.profilepicture}", height='100', width='100')
+            img.img-rounded(src= "../../uploads/#{member.profilepicture}", height='100', width='100')
             h3
-               p #{user.name}
-            p Joined On: #{moment(user.joinedOn).format("MM-DD-YYYY")}
-            p Group: #{user.group}
-            p User Description
-        button.btn.btn-primary.note-btn Add new note
+               p #{member.name}
+            p Joined On: #{moment(member.joinedOn).format("MM-DD-YYYY")}
+            p Group: #{member.group}
+            p Member Description
+        if canAddNote
+          a.btn.btn-info.note-btn(href='/notes/add', role='button') Add Note
         if notes
           #midCol(data-spy='affix', data-offset-top='300')
             ul.list-group
