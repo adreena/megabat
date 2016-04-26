@@ -32,14 +32,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret:'secret',
   saveUninitialized: true,
-  resave: true,
-  cookie: {
-    path    : '/',
-    httpOnly: false,
-    maxAge  : 24*60*60*1000
-  }
+  resave: true
 }));
 
+app.use(cookieParser());
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -62,7 +58,7 @@ app.use(expressValidator({
   }
 }));
 
-app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 //flash middleware
