@@ -7,18 +7,19 @@ block content
       .col-sm-3
         #midCol(data-spy='affix', data-offset-top='300')
           .well
-            img.img-rounded(src= "uploads/#{user.profilepicture}", height='100', width='100')
+            img.img-rounded(src= "../../uploads/#{user.profilepicture}", height='100', width='100')
             h3
                p #{user.name}
-            p Joined On: #{user.joinedOn}
+            p Joined On: #{moment(user.joinedOn).format("MM-DD-YYYY")}
             p Group: #{user.group}
             p User Description
-        button.btn.btn-primary.navbar-btn(type='button') Add new note
-        #midCol(data-spy='affix', data-offset-top='300')
-          ul.list-group
-            each note in notes
-              li.list-group-item  
-                a(href='') #{note.subject}
+        button.btn.btn-primary.note-btn Add new note
+        if notes
+          #midCol(data-spy='affix', data-offset-top='300')
+            ul.list-group
+              each note in notes
+                li.list-group-item  
+                  a(href='') #{note.subject}
       .col-sm-7
         .row
           .col.col-sm-12

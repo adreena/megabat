@@ -4,9 +4,11 @@ var multer = require('multer');
 var upload = multer({dest: './public/uploads'});
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var UserController = require('../controllers/user.controller.js');
-var UserModel = require('../models/user.model.js');
-
+var UserController = require('../_controllers/user.controller.js');
+var NoteController = require('../_controllers/note.controller.js');
+var User = require('../_schemas/user.schema.js');
+var Note = require('../_schemas/note.schema.js');
+var moment = require('moment');
 /*Login*/
 router.get('/login', function(req, res, next) {
 	console.log("loggedin");
@@ -50,12 +52,12 @@ passport.use(new LocalStrategy( function(username, password, done) {
 router.get('/show/:id', function(req, res) {
   console.log("****"+req.params.id);
   UserController.getUserById(req.params.id, function(err, user) {
-  	console.log("*^^*"+user.name);
-  	console.log("*^^*"+user.profilepicture);
-  	var notes = [{subject: 'subject 1'}, {subject: 'subject 2'}];
-  	user.notes.push(notes);
-  	user.notes.save();
-    res.render('show',{user:user, notes:user.notes});
+
+  	NoteController.getUserNotes(user._id, function(err,notes){
+  		console.log("GOT NOTES");
+		res.render('show',{user:user, notes:notes});
+  	})
+    
   });
 
 });
@@ -94,18 +96,30 @@ router.post('/register' , upload.single('profilepicture') , function(req, res) {
 		res.render('register', {errors: errors});
 	}
 	else{
-		var newUser = new UserModel({
+		var newUser = new User({
 			name:name,
 			username:username,
 			email: email,
 			password : password,
 			profilepicture : profilepicture,
-			group:'A',
-			children: [{ name: 'Matt' }, { name: 'Sarah' }]
+			group:'A'
 		});
 		UserController.createUser(newUser, function(err,user){
 			if(err) throw err;
 			console.log(user);
+			var newNote = new Note({author:newUser._id, subject:"sbj 1"});
+			NoteController.createNote(newNote, function(err,note){
+				if(err) throw err;
+				console.log("**********");
+				console.log(note);
+			});
+			var newNote2 = new Note({author:newUser._id, subject:"sbj 2"});
+			NoteController.createNote(newNote2, function(err,note){
+				if(err) throw err;
+				console.log("**********");
+				console.log(note);
+			});
+			
 		});
 	}
    req.flash('success',"User creates successfully!");

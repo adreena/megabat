@@ -28,3 +28,7 @@ ul.error li{
   margin:5 auto;
 }
 
+.note-btn {
+    width:100%;
+    margin-bottom : 20px;
+}
