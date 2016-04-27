@@ -24,7 +24,7 @@ block content
                 li.list-group-item  
                   a(href='') #{notes[i].subject}
                 - i++
-        else
+        else if canAddNote
           .alert.alert-warning(role='alert') Add you first note?       
       .col-sm-7
         .row
@@ -35,12 +35,16 @@ block content
                   .panel-heading.clearfix
                     b.panel-title.pull-left
                       | #{note.subject}
-                    .btn-group.pull-right
-                      a.btn(href='/notes/edit/#{note.id}', role='button')
-                        span.glyphicon.glyphicon-pencil.blue
-                      a.btn(href ='/notes/delete/#{note.id}', role='button')
-                        span.glyphicon.glyphicon-remove.red
-                  .panel-body.scroll 
+                    if canAddNote
+                      .btn-group.pull-right
+                        a.btn(href='/notes/edit/#{note.id}', role='button')
+                          span.glyphicon.glyphicon-pencil.blue
+                        a.btn(href ='/notes/delete/#{note.id}', role='button')
+                          span.glyphicon.glyphicon-remove.red
+                  .panel-body.scroll
+                    .col-xs-6.col-md-6
+                       a.thumbnail()
+                         img(src='/uploads/#{note.noteimage}')
                     p #{note.content}
                   .panel-footer 
                     span.glyphicon.glyphicon-thumbs-up

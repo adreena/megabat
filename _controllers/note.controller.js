@@ -20,7 +20,12 @@ module.exports.deleteNote = function(noteID,callback){
 	Note.remove({_id: noteID},callback);
 }; 
 
-module.exports.updateNote = function(changes, noteID,callback){
-    console.log("Change**\n"+changes+"\n");
-	Note.update({_id: noteID},{$set:changes},callback);
+module.exports.updateNote = function(changes, noteID ,callback){
+	console.log("Change**\n"+ noteID +"\n");
+    console.log("Change**\n"+ changes.subject +"\n");
+    console.log("Change**\n"+ changes.content +"\n");
+    var options = { multi: true }; 
+    var updates = {$set: {subject:changes.subject, content: changes.content}};
+    var condition = {_id: noteID};
+	Note.update( condition,updates, options ,callback);
 };

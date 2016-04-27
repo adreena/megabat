@@ -57,31 +57,27 @@ router.get('/edit/:id', function(req,res, next){
 	});
 	
 });
-router.post('/edit', function(req,res, next){
+router.post('/edit/:id', upload.single('noteimage'), function(req,res, next){
 	//TODO post update note
 	req.checkBody('title','Title field is required').notEmpty();
 	req.checkBody('body','Body field is required').notEmpty();
 	var errors = req.validationErrors();
-		if(errors){
-			res.render('editnote', {errors: errors});
-		}
-		else{
-			changes = {
-				content: req.body.body,
-				subject: req.body.title,
-				//noteimage: noteimage,
-				//rank: 0
+	if(errors){
+		res.render('editnote', {errors: errors});
+	}
+	else{
+		var changes = {
+				subject : req.body.title,
+				content : req.body.body
 			};
-
-		  NoteController.updateNote(changes,req.params.id, function(err,note){
-		  	if(err) 
-		  		res.send(err);
-			console.log(note);
-		  	req.flash('success', 'Post edited!');
+		NoteController.updateNote(changes, req.params.id, function(err){
+			if(err)
+				throw err;
+			req.flash('success', 'Post Updated!');
 		  	res.location('/users/show/'+req.user._id);
 		  	res.redirect('/users/show/'+req.user._id);
-		  });
-		}
+		})
+	}
 });
 
 //delete a note
