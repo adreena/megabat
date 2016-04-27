@@ -33,16 +33,18 @@ block content
               each note in notes
                 .panel.panel-default
                   .panel-heading.clearfix
-                    b #{note.subject}
+                    b.panel-title.pull-left
+                      | #{note.subject}
                     .btn-group.pull-right
-                      a.btn.btn-default.btn-sm(href='#') 
+                      a.btn(href='/notes/edit/#{note.id}', role='button')
                         span.glyphicon.glyphicon-pencil.blue
-                      a.btn.btn-default.btn-sm(href='#')
+                      a.btn(href ='/notes/delete/#{note.id}', role='button')
                         span.glyphicon.glyphicon-remove.red
                   .panel-body.scroll 
                     p #{note.content}
                   .panel-footer 
                     span.glyphicon.glyphicon-thumbs-up
                     span.badge #{note.rank}
+                    p.pull-right #{moment(note.publishedOn).format("MM-DD-YYYY, h:mm:ss a")}
                   
                

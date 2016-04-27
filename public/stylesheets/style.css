@@ -50,3 +50,11 @@ ul.error li{
     overflow-y:scroll;
     width:100%;
 }
+.panel-title{
+    float:none;
+    padding-top: 6px;
+}
+
+#note-body{
+    height: 300px;
+}

@@ -2,9 +2,11 @@ var Note = require('../_schemas/note.schema.js');
 
 module.exports.createNote = function(newNote, callback){
 	console.log('creating note ...');
-	//newUser.save(callback);
 	newNote.save(callback);
-	
+}; 
+
+module.exports.findNote = function(noteID, callback){
+	Note.findById(noteID,callback);
 }; 
 
 module.exports.getUserNotes = function(userID, callback){
@@ -12,3 +14,13 @@ module.exports.getUserNotes = function(userID, callback){
 	query.sort('rank');
 	query.exec(callback);
 }; 
+
+module.exports.deleteNote = function(noteID,callback){
+
+	Note.remove({_id: noteID},callback);
+}; 
+
+module.exports.updateNote = function(changes, noteID,callback){
+    console.log("Change**\n"+changes+"\n");
+	Note.update({_id: noteID},{$set:changes},callback);
+};
