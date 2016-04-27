@@ -15,7 +15,7 @@ block content
             p Member Description
         if canAddNote
           a.btn.btn-info.note-btn(href='/notes/add', role='button') Add Note
-        if notes
+        if notes && notes.length>0
           #midCol(data-spy='affix', data-offset-top='300')
             h3 Top 5 Notes:
             ul.list-group
@@ -24,7 +24,8 @@ block content
                 li.list-group-item  
                   a(href='') #{notes[i].subject}
                 - i++
-                  
+        else
+          .alert.alert-warning(role='alert') Add you first note?       
       .col-sm-7
         .row
           .col.col-sm-12
@@ -35,9 +36,13 @@ block content
                     b #{note.subject}
                     .btn-group.pull-right
                       a.btn.btn-default.btn-sm(href='#') 
-                        span.glyphicon.glyphicon-edit
-                      a.btn.btn-default.btn-sm(href='#') Edit
-                  .panel-body 
+                        span.glyphicon.glyphicon-pencil.blue
+                      a.btn.btn-default.btn-sm(href='#')
+                        span.glyphicon.glyphicon-remove.red
+                  .panel-body.scroll 
                     p #{note.content}
+                  .panel-footer 
+                    span.glyphicon.glyphicon-thumbs-up
+                    span.badge #{note.rank}
                   
                

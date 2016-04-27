@@ -34,3 +34,19 @@ ul.error li{
 }
 
 
+.blue {
+    color: blue;
+}
+.red {
+    color: red;
+}
+.green {
+    color: green;
+}
+
+.scroll{
+    max-height: 300px;
+    min-height: 200px;
+    overflow-y:scroll;
+    width:100%;
+}

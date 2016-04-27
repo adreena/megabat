@@ -55,6 +55,7 @@ router.get('/show/:id', function(req, res) {
   	NoteController.getUserNotes(member._id, function(err,notes){
   		console.log("GOT NOTES");
   		var canAddNote = (req.user.id == member.id);
+  		
 		res.render('show',{member:member, notes:notes, canAddNote:canAddNote});
   	})
     
@@ -107,7 +108,7 @@ router.post('/register' , upload.single('profilepicture') , function(req, res) {
 		UserController.createUser(newUser, function(err,user){
 			if(err) throw err;
 			console.log(user);
-			var newNote = new Note({author:newUser._id, subject:"sbj 1"});
+			/*var newNote = new Note({author:newUser._id, subject:"sbj 1"});
 			NoteController.createNote(newNote, function(err,note){
 				if(err) throw err;
 				console.log("**********");
@@ -118,7 +119,7 @@ router.post('/register' , upload.single('profilepicture') , function(req, res) {
 				if(err) throw err;
 				console.log("**********");
 				console.log(note);
-			});
+			});*/
 			
 		});
 	}

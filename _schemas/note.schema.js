@@ -21,6 +21,10 @@ var NoteSchema = new Schema({
 	},
 	noteimage : {
 		type:String
+	},
+	rank :{
+		type: Number,
+		default: 1
 	}
 });
 

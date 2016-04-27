@@ -31,7 +31,8 @@ router.post('/add', upload.single('noteimage'), function(req, res, next) {
 				content: req.body.body,
 				subject: req.body.title,
 				author: req.user._id,
-				noteimage: noteimage
+				noteimage: noteimage,
+				rank: 0
 			});
 
 		  NoteController.createNote(newNote, function(err,note){
