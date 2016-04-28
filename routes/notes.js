@@ -97,4 +97,17 @@ router.get('/delete/:id', function(req,res, next){
 
 });
 
+
+//like a note
+router.get('/like/:id', function(req,res, next){
+	console.log("************ Like");
+	NoteController.likeNote(req.params.id, function(err,note){
+		if(err) throw err
+	    req.flash('success', 'you Liked the post!');
+		res.location('/users/show/'+note.author);
+		res.redirect('/users/show/'+note.author);
+	});
+	
+});
+
 module.exports = router;

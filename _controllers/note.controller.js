@@ -11,7 +11,7 @@ module.exports.findNote = function(noteID, callback){
 
 module.exports.getUserNotes = function(userID, callback){
 	var query = Note.find({author: userID});
-	query.sort('rank');
+	query.sort('publishedOn');
 	query.exec(callback);
 }; 
 
@@ -28,4 +28,15 @@ module.exports.updateNote = function(changes, noteID ,callback){
     var updates = {$set: {subject:changes.subject, content: changes.content}};
     var condition = {_id: noteID};
 	Note.update( condition,updates, options ,callback);
+};
+
+module.exports.likeNote = function(noteID ,callback){
+	console.log("**"+ noteID +"\n");
+    var options = { multi: false }; 
+    Note.findById(noteID,function(err, note){
+    	if(err) throw err;
+    	note.rank +=1;
+		note.save(callback);
+    });
+    
 };

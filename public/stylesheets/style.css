@@ -54,7 +54,10 @@ ul.error li{
     float:none;
     padding-top: 6px;
 }
-
+#center-text{
+    margin-top:10px;
+    margin-right:5px;
+}
 #note-body{
     height: 300px;
 }

@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1= title
+  .container
+    .row
+      .panel.panel-default
+        .panel-heading.clearfix
+          b.panel-title.pull-left
+            | #{note.subject}
+          p#center-text.pull-right #{moment(note.publishedOn).format("MM-DD-YYYY, h:mm:ss a")}
+        .panel-body.scroll
+          .col-xs-6.col-md-6
+            a.thumbnail()
+              img(src='/uploads/#{note.noteimage}')
+            p #{note.content}
+        .panel-footer 
+          ul.nav.nav-pills(role='tablist')
+            li(role='presentation')
+              a.btn(href='#', role='button')
+                span.glyphicon.glyphicon-thumbs-up
+                span.badge 42
+            li(role='presentation')
+              a.btn(href='#', role='button')
+                span.glyphicon.glyphicon-comment
+                span.badge 20
+              

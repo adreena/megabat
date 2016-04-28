@@ -49,14 +49,15 @@ passport.use(new LocalStrategy( function(username, password, done) {
 
 /*Show User*/
 router.get('/show/:id', function(req, res) {
-  console.log("****"+req.params.id);
   UserController.getUserById(req.params.id, function(err, member) {
 
   	NoteController.getUserNotes(member._id, function(err,notes){
   		console.log("GOT NOTES");
   		var canAddNote = (req.user.id == member.id);
-  		
-		res.render('show',{member:member, notes:notes, canAddNote:canAddNote});
+  		//make a copy of notes and sort
+  		var topnotes = notes.slice();
+  		topnotes.sort(function(a,b){ return b.rank - a.rank});
+		res.render('show',{member:member, notes:notes, topnotes: topnotes, canAddNote:canAddNote});
   	})
     
   });
