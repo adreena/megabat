@@ -25,5 +25,8 @@
     "passport-local": "*",
     "serve-favicon": "~2.3.0",
     "moment" : "*"
+  },
+  "engines": {
+    "node": "4.4.2"
   }
 }
