@@ -26,7 +26,7 @@ var NoteSchema = new Schema({
 		type: Number,
 		default: 1
 	},
-	comments:
+	//comments
 });
 
 NoteSchema.plugin(relationship, { relationshipPathName:'author' });
