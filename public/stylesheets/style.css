@@ -43,6 +43,11 @@ ul.error li{
 .green {
     color: green;
 }
+#panel-content{
+    width:90%;
+    margin:40px;
+}
+
 
 .scroll{
     max-height: 300px;

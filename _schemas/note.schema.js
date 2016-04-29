@@ -25,7 +25,8 @@ var NoteSchema = new Schema({
 	rank :{
 		type: Number,
 		default: 1
-	}
+	},
+	comments:
 });
 
 NoteSchema.plugin(relationship, { relationshipPathName:'author' });

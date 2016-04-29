@@ -97,7 +97,6 @@ router.get('/delete/:id', function(req,res, next){
 
 });
 
-
 //like a note
 router.get('/like/:id', function(req,res, next){
 	console.log("************ Like");
@@ -109,5 +108,16 @@ router.get('/like/:id', function(req,res, next){
 	});
 	
 });
+
+//cooments note
+router.get('/comments/:id', function(req,res, next){
+	console.log("************ Comments");
+	NoteController.findNote(req.params.id, function(err,note){
+		res.render('comments',{title:'Comments',note:note});
+	});
+	
+	
+});
+
 
 module.exports = router;

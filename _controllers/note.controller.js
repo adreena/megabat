@@ -37,6 +37,17 @@ module.exports.likeNote = function(noteID ,callback){
     	if(err) throw err;
     	note.rank +=1;
 		note.save(callback);
+    });    
+};
+
+module.exports.addComment = function(noteID ,callback){
+	console.log("**"+ noteID +"\n");
+    var options = { multi: false }; 
+    Note.findById(noteID,function(err, note){
+    	if(err) throw err;
+    	note.rank +=1;
+		note.save(callback);
     });
     
 };
+

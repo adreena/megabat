@@ -3,25 +3,38 @@ extends layout
 block content
   h1= title
   .container
-    .row
+    .row#panel-content
       .panel.panel-default
         .panel-heading.clearfix
           b.panel-title.pull-left
             | #{note.subject}
           p#center-text.pull-right #{moment(note.publishedOn).format("MM-DD-YYYY, h:mm:ss a")}
-        .panel-body.scroll
+        .panel-body
           .col-xs-6.col-md-6
             a.thumbnail()
               img(src='/uploads/#{note.noteimage}')
+          .col-xs-6.col-md-6
             p #{note.content}
         .panel-footer 
           ul.nav.nav-pills(role='tablist')
             li(role='presentation')
               a.btn(href='#', role='button')
                 span.glyphicon.glyphicon-thumbs-up
-                span.badge 42
+                span.badge #{note.rank}
             li(role='presentation')
               a.btn(href='#', role='button')
                 span.glyphicon.glyphicon-comment
                 span.badge 20
+      form(method='post', action='/notes/addcomment')
+        input(name='noteid', type='hidden', value = '#{note._id}')
+        .form-group
+          label Name
+          input.form-control(type='text', name='name')
+        .form-group
+          label Email
+          input.form-control(type='text', name='email')
+        .form-group
+          label Body
+          textarea.form-control(type='text', name='body')
+        input.btn.btn-default(name='submit',type='submit',value='Add Comment')
               
