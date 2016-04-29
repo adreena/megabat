@@ -48,11 +48,10 @@ block content
                     p #{note.content}
                   .panel-footer 
                     ul.nav.nav-pills(role='tablist')
-                      if !canAddNote
-                        li(role='presentation')
-                          a.btn(href='/notes/like/#{note.id}', role='button')
-                            span.glyphicon.glyphicon-thumbs-up
-                            span.badge #{note.rank}
+                      li(role='presentation')
+                        a.btn(href='/notes/like/#{note.id}', role='button')
+                          span.glyphicon.glyphicon-thumbs-up
+                          span.badge #{note.rank}
                       li(role='presentation')
                         a.btn(href='/notes/comments/#{note.id}', role='button')
                           span.glyphicon.glyphicon-comment
