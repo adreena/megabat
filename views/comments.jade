@@ -24,17 +24,24 @@ block content
             li(role='presentation')
               a.btn(href='#', role='button')
                 span.glyphicon.glyphicon-comment
-                span.badge 20
-      form(method='post', action='/notes/addcomment')
-        input(name='noteid', type='hidden', value = '#{note._id}')
-        .form-group
-          label Name
-          input.form-control(type='text', name='name')
-        .form-group
-          label Email
-          input.form-control(type='text', name='email')
-        .form-group
-          label Body
-          textarea.form-control(type='text', name='body')
-        input.btn.btn-default(name='submit',type='submit',value='Add Comment')
+                span.badge #{comments.length}
+          hr
+          .row#comment-scroll
+            each comment in comments
+              .row#comment-area
+                .col-md-1.col-xs-1.center-block
+                  img(src= "#", height='30', width='30')
+                .col-md-11.col-xs-11
+                  p #{comment.content}
+              .row#comment-date
+                p.pull-right #{moment(comment.date).format("MM-DD-YYYY, h:mm:ss a")}
+              hr
+          hr
+          .row#comment-area
+            img(src= "../../uploads/#{user.profilepicture}", height='30', width='30')
+            form(method='post', action='/notes/addcomment')
+              input(name='noteid', type='hidden', value = '#{note._id}')
+              .form-group
+                textarea.form-control#comment-scroll(type='text', name='content')
+              input.btn.btn-default(name='submit',type='submit',value='Add Comment')
               

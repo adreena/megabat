@@ -27,7 +27,11 @@ ul.error li{
   float:none;
   margin:5 auto;
 }
-
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+ }
 .note-btn {
     width:100%;
     margin-bottom : 20px;
@@ -48,6 +52,24 @@ ul.error li{
     margin:40px;
 }
 
+#comment-scroll{
+    max-height: 200px;
+    min-height: 50px;
+    overflow-y:scroll;
+    width:100%;
+}
+#comment-area{
+    margin:10px;
+}
+#comment-date{
+    margin-top:5px;
+    margin-right:5px;
+    margin-bottom: 0;
+    margin-left: 0;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 12px;
+}
 
 .scroll{
     max-height: 300px;

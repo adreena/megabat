@@ -109,13 +109,22 @@ router.get('/like/:id', function(req,res, next){
 	
 });
 
-//cooments note
+//comments note
 router.get('/comments/:id', function(req,res, next){
 	console.log("************ Comments");
 	NoteController.findNote(req.params.id, function(err,note){
-		res.render('comments',{title:'Comments',note:note});
+		var comments=[{content:"comment1", date: Date.now()}, {content:"comment1", date: Date.now()}];
+		res.render('comments',{title:'Comments',note:note, user: req.user, comments: comments});
 	});
 	
+	
+});
+router.post('/comments', function(req,res, next){
+	console.log("************ PostComments");
+	/*NoteController.findNote(req.params.id, function(err,note){
+		res.render('comments',{title:'Comments',note:note, user: req.user});
+	});
+	*/
 	
 });
 
