@@ -52,7 +52,8 @@ router.get('/show/:id', function(req, res) {
   UserController.getUserById(req.params.id, function(err, member) {
 
   	NoteController.getUserNotes(member._id, function(err,notes){
-  		console.log("GOT NOTES");
+  		console.log("****GOT NOTES");
+  		console.log(notes);
   		var canAddNote = (req.user.id == member.id);
   		//make a copy of notes and sort
   		var topnotes = notes.slice();

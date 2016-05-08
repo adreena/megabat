@@ -4,6 +4,7 @@ var Note = require('../_schemas/note.schema.js');
 var NoteController = require('../_controllers/note.controller.js');
 var multer = require('multer');
 var upload = multer({dest: './public/uploads'});
+var Comment = require('../_schemas/comment.schema.js');
 
 router.get('/add', function(req, res, next) {
 	console.log(req.user+"************************");
@@ -113,18 +114,34 @@ router.get('/like/:id', function(req,res, next){
 router.get('/comments/:id', function(req,res, next){
 	console.log("************ Comments");
 	NoteController.findNote(req.params.id, function(err,note){
-		var comments=[{content:"comment1", date: Date.now()}, {content:"comment1", date: Date.now()}];
-		res.render('comments',{title:'Comments',note:note, user: req.user, comments: comments});
+		//var comments=[{content:"comment1", date: Date.now()}, {content:"comment1", date: Date.now()}];
+		NoteController.getNoteComments(note.id, function(err,comments){
+			console.log("********Comments: "+ comments);
+			console.log("**** Note: "+ note);
+			console.log("***** User: "+ req.user.name);
+			res.render('comments',{title:'Comments',note:note, user: req.user, comments: comments});
+		});
+
+
 	});
 	
 	
 });
-router.post('/comments', function(req,res, next){
+router.post('/comments/:id', function(req,res, next){
 	console.log("************ PostComments");
-	/*NoteController.findNote(req.params.id, function(err,note){
-		res.render('comments',{title:'Comments',note:note, user: req.user});
-	});
-	*/
+	var newComment = new Comment({
+		content: req.body.content,
+		commenter: req.user._id,
+		noteID:req.params.id
+	}); 
+	NoteController.addComment(newComment, function(err,comment){
+		  	if(err) 
+		  		res.send(err);
+			console.log("+++++++:"+comment);
+		  	req.flash('success', 'Comment added!');
+		  	res.location('/users/show/'+comment.commenter);
+		  	res.redirect('/users/show/'+comment.commenter);
+		  });
 	
 });
 

@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var relationship = require('mongoose-relationship');
 var User = require('./user.schema.js');
+var Comment = require('./comment.schema.js');
 
 var NoteSchema = new Schema({
 	author : { 
@@ -26,7 +27,7 @@ var NoteSchema = new Schema({
 		type: Number,
 		default: 1
 	},
-	//comments
+	comments:[]
 });
 
 NoteSchema.plugin(relationship, { relationshipPathName:'author' });

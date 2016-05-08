@@ -24,22 +24,24 @@ block content
             li(role='presentation')
               a.btn(href='#', role='button')
                 span.glyphicon.glyphicon-comment
-                span.badge #{comments.length}
-          hr
-          .row#comment-scroll
-            each comment in comments
-              .row#comment-area
-                .col-md-1.col-xs-1.center-block
-                  img(src= "#", height='30', width='30')
-                .col-md-11.col-xs-11
-                  p #{comment.content}
-              .row#comment-date
-                p.pull-right #{moment(comment.date).format("MM-DD-YYYY, h:mm:ss a")}
-              hr
+                if comments
+                  span.badge #{comments.length}
+                else
+                  span.badge 0
+          if comments && comments.length>0
+            .row#comment-scroll
+              each comment in comments
+                .row#comment-area
+                  .col-md-1.col-xs-1.center-block
+                    img(src= "../../uploads/#{user.profilepicture}", height='30', width='30')
+                  .col-md-11.col-xs-11.well
+                    p #{comment.content}
+                    .row#comment-date
+                      p.pull-right #{moment(comment.date).format("MM-DD-YYYY, h:mm:ss a")}
           hr
           .row#comment-area
             img(src= "../../uploads/#{user.profilepicture}", height='30', width='30')
-            form(method='post', action='/notes/addcomment')
+            form(method='post', action='/notes/comments/#{note._id}')
               input(name='noteid', type='hidden', value = '#{note._id}')
               .form-group
                 textarea.form-control#comment-scroll(type='text', name='content')

@@ -1,4 +1,5 @@
 var Note = require('../_schemas/note.schema.js');
+var Comment = require('../_schemas/comment.schema.js');
 
 module.exports.createNote = function(newNote, callback){
 	console.log('creating note ...');
@@ -40,14 +41,27 @@ module.exports.likeNote = function(noteID ,callback){
     });    
 };
 
-module.exports.addComment = function(noteID ,callback){
-	console.log("**"+ noteID +"\n");
-    var options = { multi: false }; 
-    Note.findById(noteID,function(err, note){
-    	if(err) throw err;
-    	note.rank +=1;
-		note.save(callback);
-    });
+module.exports.addComment = function(newComment ,callback){
+	console.log('adding comment ...');
+    
+    Note.findById(newComment.noteID,function(err, note){
+        if(err) throw err;
+        console.log(newComment);
+        console.log(note);
+        note.comments.push(newComment);
+        note.save(function(err){
+            if(!err){
+                console.log("*****-comment saved!");
+                newComment.save(callback);
+            }
+        });
+    });   
     
 };
+
+module.exports.getNoteComments = function(noteID, callback){
+    var query = Comment.find({noteID: noteID});
+    query.sort('date');
+    query.exec(callback);
+}; 
 
