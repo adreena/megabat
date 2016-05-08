@@ -139,8 +139,8 @@ router.post('/comments/:id', function(req,res, next){
 		  		res.send(err);
 			console.log("+++++++:"+comment);
 		  	req.flash('success', 'Comment added!');
-		  	res.location('/users/show/'+comment.commenter);
-		  	res.redirect('/users/show/'+comment.commenter);
+		  	res.location('/note/comments/'+comment.noteID);
+		  	res.redirect('/notes/comments/'+comment.noteID);
 		  });
 	
 });

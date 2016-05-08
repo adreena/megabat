@@ -1,5 +1,7 @@
 var Note = require('../_schemas/note.schema.js');
 var Comment = require('../_schemas/comment.schema.js');
+var UserController = require('../_controllers/user.controller.js');
+var User = require('../_schemas/user.schema.js');
 
 module.exports.createNote = function(newNote, callback){
 	console.log('creating note ...');
@@ -60,8 +62,19 @@ module.exports.addComment = function(newComment ,callback){
 };
 
 module.exports.getNoteComments = function(noteID, callback){
-    var query = Comment.find({noteID: noteID});
-    query.sort('date');
-    query.exec(callback);
+//TODO
+
+Comment.find({noteID: noteID}, function(err, comments) {
+     console.log(comments);
+    // Map the docs into an array of just the _ids
+    var ids = comments.map(function(comment) { return comment.commenter; });
+    console.log("*xxxx*"+ids);
+    // Get the companies whose founders are in that set.
+    User.find({_id: {$in: ids}}, function(err, user) {
+        console.log(comments);
+        // docs contains your answer
+    });
+});
+
 }; 
 

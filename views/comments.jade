@@ -33,7 +33,8 @@ block content
               each comment in comments
                 .row#comment-area
                   .col-md-1.col-xs-1.center-block
-                    img(src= "../../uploads/#{user.profilepicture}", height='30', width='30')
+                    img(src= "../../uploads/#{comment.commenter.profilepicture}", height='30', width='30')
+                    p #{comment.commenter.name}
                   .col-md-11.col-xs-11.well
                     p #{comment.content}
                     .row#comment-date
